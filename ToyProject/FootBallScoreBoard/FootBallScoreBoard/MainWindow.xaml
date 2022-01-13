@@ -1,0 +1,85 @@
+﻿<Window x:Class="FootBallScoreBoard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:control="clr-namespace:FootBallScoreBoard.Control"
+        Title="Score Board"
+        Width="570" Height="360"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Window.Resources>
+
+        <Style x:Key="StartStopButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="DarkRed"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{StaticResource Digital}"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid Background="#00000000" >
+                            <Ellipse Stroke="{TemplateBinding BorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" StrokeThickness="{TemplateBinding BorderThickness}" 
+                                     Fill="{TemplateBinding Background}"/>
+                            <TextBlock x:Name="SimbolTextBlock" Text="▶" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="5,0,0,0" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="TextBlock.Text" TargetName="SimbolTextBlock"  Value="ΙΙ"/>
+                                <Setter Property="Margin" TargetName="SimbolTextBlock"  Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background"  Value="Red"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background"  Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Background="Black">
+        <Viewbox>
+            <Grid Width="570" Height="360">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4.5*"/>
+                    <RowDefinition Height="5.5*"/>
+
+                </Grid.RowDefinitions>
+                <Grid>
+                    <control:CountDownTimer x:Name="GameTimer" FontSize="210" Width="400" IsCountDownEnabled="{Binding IsChecked, ElementName=PlayButton, Mode=TwoWay}" RemainingTime="{Binding RemainingTime, Mode=TwoWay}" />
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0" Width="88"  >
+                        <ToggleButton x:Name="PlayButton"  Width="50" Height="50" Style="{DynamicResource StartStopButtonStyle}" />
+                        <UniformGrid Visibility="{Binding IsSettingMode, ElementName=GameTimer, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,2,0,0" >
+                            <Button Content="10&#xA;min" Width="40" Height="40" Command="{Binding SetMinuteCommand}" CommandParameter="10" Style="{DynamicResource TimerButtonStyle}"/>
+                            <Button Content="15&#xA;min" Width="40" Height="40" Command="{Binding SetMinuteCommand}" CommandParameter="15"  Style="{DynamicResource TimerButtonStyle}"/>
+                            <Button Content="20&#xA;min" Width="40" Height="40" Command="{Binding SetMinuteCommand}" CommandParameter="20"  Style="{DynamicResource TimerButtonStyle}"/>
+                            <Button Content="Reset" Width="40" Height="40" FontSize="10" Command="{Binding SetMinuteCommand}" CommandParameter="0" Style="{DynamicResource TimerButtonStyle}"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <control:FlickNumericSpinner Grid.Column="0" Value="{Binding HomeScore}" Foreground="GreenYellow" FontSize="250"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="0,20">
+                        <Button Content="⇋" Height="55" FontSize="50" Command="{Binding SwapScoreCommand}" VerticalAlignment="Top"  Style="{DynamicResource TransparentButtonStyle}" Margin="0,0,0,30"/>
+                        <Button Content="Reset Score" Height="55" FontSize="20"  Command="{Binding ResetScoreCommand}" VerticalAlignment="Bottom"   Style="{DynamicResource TransparentButtonStyle}"/>
+                    </StackPanel>
+                    <control:FlickNumericSpinner Grid.Column="2"  Value="{Binding AwayScore}" Foreground="GreenYellow" FontSize="250"  />
+                </Grid>
+            </Grid>
+        </Viewbox>
+    </Grid>
+</Window>

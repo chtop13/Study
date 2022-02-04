@@ -39,6 +39,22 @@ namespace FootBallScoreBoard.ViewModel
         private ICommand _setMinuteCommand;
         public ICommand SetMinuteCommand => _setMinuteCommand ?? (_setMinuteCommand = new RelayCommand<int>(SetRemainingMinute));
 
+        private ICommand _addHomeScoreCommand;
+        public ICommand AddHomeScoreCommand => _addHomeScoreCommand ?? (_addHomeScoreCommand = new RelayCommand<int>(AddHomeScore));
+
+        private ICommand _addAwayScoreCommand;
+        public ICommand AddAwayScoreCommand => _addAwayScoreCommand ?? (_addAwayScoreCommand = new RelayCommand<int>(AddAwayScore));
+
+        private void AddHomeScore(int value)
+        {
+            HomeScore += value;
+        }
+
+        private void AddAwayScore(int value)
+        {
+            AwayScore += value;
+        }
+
         private void ResetScore()
         {
             HomeScore = 0;

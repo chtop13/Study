@@ -72,12 +72,20 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <control:FlickNumericSpinner Grid.Column="0" Value="{Binding HomeScore}" Foreground="GreenYellow" FontSize="250"/>
+                    <control:FlickNumericSpinner Grid.Column="0" Value="{Binding HomeScore}" Foreground="GreenYellow" FontSize="250" IsReadOnly="True"/>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" >
+                        <Button Content="▲" Width="30" Height="40" Command="{Binding AddHomeScoreCommand}" CommandParameter="1" Style="{DynamicResource CircleButtonStyle}"/>
+                        <Button Content="▼" Width="30" Height="40" Margin="0,20,0,0" Command="{Binding AddHomeScoreCommand}" CommandParameter="-1" Style="{DynamicResource CircleButtonStyle}"/>
+                    </StackPanel>
                     <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="0,20">
                         <Button Content="⇋" Height="55" FontSize="50" Command="{Binding SwapScoreCommand}" VerticalAlignment="Top"  Style="{DynamicResource TransparentButtonStyle}" Margin="0,0,0,30"/>
                         <Button Content="Reset Score" Height="55" FontSize="20"  Command="{Binding ResetScoreCommand}" VerticalAlignment="Bottom"   Style="{DynamicResource TransparentButtonStyle}"/>
                     </StackPanel>
-                    <control:FlickNumericSpinner Grid.Column="2"  Value="{Binding AwayScore}" Foreground="GreenYellow" FontSize="250"  />
+                    <control:FlickNumericSpinner Grid.Column="2"  Value="{Binding AwayScore}" Foreground="GreenYellow" FontSize="250" IsReadOnly="True"  />
+                    <StackPanel Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" >
+                        <Button Content="▲" Width="30" Height="40" Command="{Binding AddAwayScoreCommand}" CommandParameter="1" Style="{DynamicResource CircleButtonStyle}"/>
+                        <Button Content="▼" Width="30" Height="40" Margin="0,20,0,0" Command="{Binding AddAwayScoreCommand}" CommandParameter="-1" Style="{DynamicResource CircleButtonStyle}"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Viewbox>
